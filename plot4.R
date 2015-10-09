@@ -17,13 +17,13 @@ if (!file.exists(dirName)) {
   unzip ("dataset.zip", exdir = dirName)
 }
 
-# Path to activity labels
+# Path to data
 dataFile <- paste(dirName, "/household_power_consumption.txt", sep="")
 
 # Read in the header
 header <- read.table(dataFile, header=FALSE, sep=";",  nrows=1)
 
-# Read in the data from the dates 2007-02-01 and 2007-02-02, found using trial
+# Read in the data from the dates 2007-02-01 and 2007-02-02, skip found using trial
 # and error.  Add header and print to screen just to be sure.
 data <- read.table(dataFile, header=FALSE, sep=";", skip=66637, nrows=24*60*2)
 colnames(data) <- unlist(header)
@@ -33,7 +33,7 @@ tail(data)
 # Set the locale display dates in English
 Sys.setlocale("LC_TIME", "C");
 
-# Change the date and time information into a forma R understands
+# Change the date and time information into a form R understands
 data$dateCol <- strptime(paste(data$Date, data$Time), "%d/%m/%Y %H:%M:%S")
 
 # Print to png file
